@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(http_demo)
+
+set(SRC_HTTP_SERVER 
+    ${PROJECT_SOURCE_DIR}/main.cpp 
+    ${PROJECT_SOURCE_DIR}/http_server.cpp 
+    ${PROJECT_SOURCE_DIR}/../common/mongoose.c)
+
+include_directories(${PROJECT_SOURCE_DIR})
+
+add_executable(http_server ${SRC_HTTP_SERVER})
