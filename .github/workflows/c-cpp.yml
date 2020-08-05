@@ -16,4 +16,4 @@ jobs:
     - name: build
       run: ./build.sh
     - name: run test
-      run: ./cpp_web_demo/bin/http_server
+      run: ./cpp_web_demo/bin/http_server && ./cpp_web_demo/bin/http_client
