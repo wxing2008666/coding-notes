@@ -7,7 +7,7 @@ set -e
 cd hello_world
 g++ -o main hello_world.cpp
 
-cd cpp_web_demo
-cmake .
-make
+#cd cpp_web_demo
+#cmake .
+#make
 
