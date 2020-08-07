@@ -16,4 +16,4 @@ jobs:
     - name: build
       run: ./build.sh
     - name: run test
-      run: ./hello_world/main
+      run: ./hello_world/main && ./msgpack_test/test
