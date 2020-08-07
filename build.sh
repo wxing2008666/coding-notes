@@ -9,10 +9,11 @@ g++ -o main hello_world.cpp
 
 cd ..
 
-cd msgpack_test
-g++ -o test test.cpp -I./include
+#msgpack require boost
+#cd msgpack_test
+#g++ -o test test.cpp -I./include
 
-cd ..
+#cd ..
 
 cd cpp_web_demo
 cmake .
