@@ -8,9 +8,9 @@
 # To enable this hook, rename this file to "pre-commit".
 
 # get Hash of head
-if git rev-parse --verify HEAD >/dev/null 2>&1
+if git rev-parse --verify HEAD^ >/dev/null 2>&1
 then
-    against=`git rev-parse --verify HEAD`
+    against=`git rev-parse --verify HEAD^`
     echo -e "\e[95m=========clang-format begin========\e[0m"
 else
     # Initial commit: diff against an empty tree object
