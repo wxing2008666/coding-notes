@@ -1,0 +1,65 @@
+#!/bin/bash
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+# get Hash of head
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+    against=`git rev-parse --verify HEAD`
+    echo -e "\e[95m=========clang-format begin========\e[0m"
+else
+    # Initial commit: diff against an empty tree object
+    against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+    exit 0
+fi
+
+# print head Hash
+echo "get head:$against"
+
+# Redirect output to stderr.
+exec 1>&2
+
+#get diff of working tree (Including binary files), save as tmp
+git diff --full-index --binary >/tmp/cpt_diff_temp.diff
+
+#delete diff of working tree and retain staged changes (just show index)
+git checkout -- .
+
+#get diff of clang between commits
+clang_diff=`python ~/cpt/clang/bin/git-clang-format --binary ~/cpt/clang/bin/clang-format --diff $against`
+
+#Coloring output
+IFS=$'\n\n'
+for i in $clang_diff;
+do
+    if [[ `expr index $i "@"` -eq 1 ]]; then  
+        echo -e "\e[96m$i\e[0m"
+    elif [[ `expr index $i "\-"` -eq 1 ]]; then  
+        echo -e "\e[91m$i\e[0m"
+    elif [[ `expr index $i "\+"` -eq 1 ]]; then  
+        echo -e "\e[92m$i\e[0m"
+    else
+        echo $i
+    fi
+done
+
+#Get diff string from tmp
+git_diff=`cat /tmp/cpt_diff_temp.diff | head -n 1`
+
+if [ "$git_diff" == "" ]; then
+    #put calng_patch to staged and not staged changes 
+    echo "$clang_diff" | git apply --index >/dev/null 2>&1
+else
+    #put git_patch to changes not staged
+    git apply /tmp/cpt_diff_temp.diff >/dev/null 2>&1
+
+    #put calng_patch to staged changes 
+    echo "$clang_diff" | git apply --cached >/dev/null 2>&1
+fi
+
+echo -e "\e[95m==========clang-format end=========\e[0m"
