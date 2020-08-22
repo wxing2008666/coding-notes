@@ -4,6 +4,14 @@ set -x
 # Cause the script to exit if a single command fails.
 set -e
 
+if which clang-format >/dev/null; then
+    CLANG_FORMAT_VERSION=$(clang-format --version | awk '{print $3}')
+    echo $CLANG_FORMAT_VERSION
+else
+    echo "WARNING: clang-format is not installed! now installing"
+    sudo apt-get install clang-format
+fi
+
 cd hello_world
 g++ -o main hello_world.cpp
 
