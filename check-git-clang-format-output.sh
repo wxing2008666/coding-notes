@@ -4,7 +4,7 @@
 if git rev-parse --verify HEAD >/dev/null 2>&1; then
   # Not in a pull request, so compare against parent commit
   #base_commit="HEAD^"
-  base_commit=`git rev-parse --verify HEAD`
+  base_commit=`git rev-parse --verify HEAD^`
   echo "Running clang-format against parent commit $base_commit"
 else
   #base_commit="$(git merge-base "${TRAVIS_BRANCH}" HEAD)"
