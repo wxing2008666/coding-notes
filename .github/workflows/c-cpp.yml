@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: cpplint
-      run: ./pre-commit
+      run: ./check-git-clang-format-output.sh
     - name: build
       run: ./build.sh
     - name: run test
