@@ -31,7 +31,7 @@ git diff --full-index --binary >/tmp/cpt_diff_temp.diff
 git checkout -- .
 
 #get diff of clang between commits
-clang_diff=`python ~/cpt/clang/bin/git-clang-format --binary ~/cpt/clang/bin/clang-format --diff $against`
+clang_diff=`python /usr/bin/git-clang-format --binary /usr/bin/clang-format --diff $against`
 
 #Coloring output
 IFS=$'\n\n'
