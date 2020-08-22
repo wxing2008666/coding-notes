@@ -8,8 +8,8 @@ if which clang-format >/dev/null; then
     CLANG_FORMAT_VERSION=$(clang-format --version | awk '{print $3}')
     echo $CLANG_FORMAT_VERSION
 else
-    echo "WARNING: clang-format is not installed! now installing"
-    sudo apt-get install clang-format
+    echo "WARNING: clang-format is not installed!"
+    #sudo apt-get install clang-format
 fi
 
 cd hello_world
