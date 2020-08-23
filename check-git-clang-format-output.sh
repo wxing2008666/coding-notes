@@ -6,7 +6,7 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
   #base_commit="HEAD^"
   base_commit=`git rev-parse --verify HEAD`
   origin_commit=`git rev-parse --verify origin/HEAD`
-  echo "Running clang-format against parent commit $base_commit"
+  echo "Running clang-format against parent commit $base_commit, and $origin_commit"
 else
   #base_commit="$(git merge-base "${TRAVIS_BRANCH}" HEAD)"
   base_commit=4b825dc642cb6eb9a060e54bf8d69288fbee4904
