@@ -13,7 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      git diff ${{github.event.pull_request.head.sha}} ${{github.event.pull_request.base.sha}}
+          with:
+                  fetch-depth: 0
+      git diff --name-only ${{ github.event.before }} ${{ github.sha }}
     - name: Dump GitHub context
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
