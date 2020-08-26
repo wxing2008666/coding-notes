@@ -13,13 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-          with:
-                  fetch-depth: 0
-      git diff --name-only ${{ github.event.before }} ${{ github.sha }}
     - name: Dump GitHub context
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
+    - name: get diff
+      run: git diff ${{github.event.pull_request.head.sha}} ${{github.event.pull_request.base.sha}}
     - name: cpplint
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
