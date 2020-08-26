@@ -12,7 +12,8 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
 	  apt-get install -y jq >/dev/null
   fi
   origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
-  current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.head.sha')
+  #current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.head.sha')
+  current_commit=`git rev-parse --verify HEAD`
   echo $origin_commit
   echo $current_commit
   echo "Running clang-format against parent commit $origin_commit, and $current_commit"
@@ -23,7 +24,7 @@ else
   echo "Running clang-format against branch $current_commit, with hash $(git rev-parse "$current_commit")"
 fi
 #exclude_regex="(.*thirdparty/|.*redismodule.h|.*.java|.*.jsx?|.*.tsx?)"
-output="$(./git-clang-format --binary /usr/bin/clang-format --commit "$current_commit" "$origin_commit" --diff)"
+output="$(./git-clang-format --binary clang-format --commit "$current_commit" "$origin_commit" --diff)"
 if [ "$output" = "no modified files to format" ] || [ "$output" = "clang-format did not modify any files" ] ; then
   echo "clang-format passed."
   exit 0
