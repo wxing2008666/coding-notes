@@ -25,7 +25,7 @@ else
   echo "Running clang-format against branch $current_commit, with hash $(git rev-parse "$current_commit")"
 fi
 #exclude_regex="(.*thirdparty/|.*redismodule.h|.*.java|.*.jsx?|.*.tsx?)"
-output="$(./git-clang-format --binary clang-format --commit "$origin_commit" --diff)"
+output="$(./git-clang-format --binary clang-format --commit "$current_commit" --diff)"
 if [ "$output" = "no modified files to format" ] || [ "$output" = "clang-format did not modify any files" ] ; then
   echo "clang-format passed."
   exit 0
