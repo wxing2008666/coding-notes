@@ -6,6 +6,7 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
   #base_commit="HEAD^"
   base_commit=`git rev-parse --verify HEAD`
   origin_commit=`git rev-parse --verify origin/HEAD`
+  echo "$GITHUB_CONTEXT"
   echo $base_commit
   echo $origin_commit
   echo "Running clang-format against parent commit $base_commit, and $origin_commit"
