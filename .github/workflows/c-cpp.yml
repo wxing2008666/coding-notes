@@ -20,7 +20,8 @@ jobs:
     - name: cpplint
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: ./check-git-clang-format-output.sh
+      git diff ${{github.event.pull_request.head.sha}} ${{github.event.pull_request.base.sha}} >> test.txt
+      run: cat test.txt && ./check-git-clang-format-output.sh
     - name: build
       run: ./build.sh
     - name: run test
