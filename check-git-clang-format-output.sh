@@ -5,18 +5,13 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
   #base_commit="HEAD^"
   #base_commit=`git rev-parse --verify HEAD`
   #origin_commit=`git rev-parse --verify origin/HEAD`
-  if which jq >/dev/null; then
-	  echo "jq already exist"
-  else
-	  echo "jq not exist, run sudo apt-get install jq"
-	  apt-get install -y jq >/dev/null
-  fi
+
   current_commit=`git rev-parse --verify HEAD`
-  origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
+  #origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
   #current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.sha')
-  echo $origin_commit
+  #echo $origin_commit
   echo $current_commit
-  echo "$GITHUB_SHA"
+  #echo "$GITHUB_SHA"
   echo "Running clang-format against parent commit $origin_commit, and $current_commit"
 else
   #base_commit="$(git merge-base "${TRAVIS_BRANCH}" HEAD)"

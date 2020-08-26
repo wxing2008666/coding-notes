@@ -17,8 +17,6 @@ jobs:
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
-    - name: get diff
-      run: git diff ${{github.event.before}} ${{github.sha}}
     - name: cpplint
       env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
