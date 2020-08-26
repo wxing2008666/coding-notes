@@ -12,8 +12,7 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
 	  apt-get install -y jq >/dev/null
   fi
   origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
-  #current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.head.sha')
-  current_commit=`git rev-parse --verify HEAD`
+  current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.sha')
   echo $origin_commit
   echo $current_commit
   echo "Running clang-format against parent commit $origin_commit, and $current_commit"
