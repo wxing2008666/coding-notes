@@ -22,9 +22,9 @@ jobs:
       #GITHUB_CONTEXT: ${{ toJson(github) }}
       #run: ./check-git-clang-format-output.sh
     - name: get commits diff
-        id: getfile
-        run: |
-          echo "::set-output name=files::$(git diff-tree --no-commit-id -r ${{ github.sha }} | xargs)"
+      id: getfile
+      run: |
+        echo "::set-output name=files::$(git diff-tree --no-commit-id -r ${{ github.sha }} | xargs)"
     - name: echo diff output
       run: |
         echo ${steps.getfile.outputs.files}}
