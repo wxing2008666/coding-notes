@@ -27,6 +27,8 @@ jobs:
       run: |
         echo ${{ steps.getfile.outputs.files }}
     - name: cpplint
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./check-git-clang-format-output.sh
     - name: build
       run: ./build.sh
