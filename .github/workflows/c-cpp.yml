@@ -24,7 +24,7 @@ jobs:
     - name: get commits diff
       id: getfile
       run: |
-        echo "::set-output name=files::$(git diff-tree --no-commit-id -r ${{ github.event.before }} ${{ github.sha }} | xargs)"
+        echo "::set-output name=files::$(git diff ${{ github.event.before }} ${{ github.sha }})"
     - name: echo diff output
       run: |
         echo ${{ steps.getfile.outputs.files }}
