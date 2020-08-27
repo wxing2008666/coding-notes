@@ -2,8 +2,7 @@
 #include <iostream>
 using namespace std;
 
-int main() 
-{
+int main() {
     cout << "hello, world!" << endl;
     cout<<"hello"   <<   endl;
     cout<<"test"<<   endl;
