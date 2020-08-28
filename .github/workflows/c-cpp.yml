@@ -7,6 +7,16 @@ on:
     branches: [ master ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: cpplint
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: ./check-git-clang-format-output.sh
+
+jobs:
   build:
 
     runs-on: ubuntu-latest
@@ -26,9 +36,6 @@ jobs:
     - name: echo diff output
       run: |
         echo ${{ steps.getfile.outputs.files }}
-    - name: cpplint
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
       run: ./check-git-clang-format-output.sh
     - name: build
       run: ./build.sh
