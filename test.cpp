@@ -4,6 +4,6 @@ using namespace std;
 
 int main() {
   cout << "hello, world!" << endl;
-    cout<<"test clang format" << endl;
+  cout << "test clang format" << endl;
   return 0;
 }
