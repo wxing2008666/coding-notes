@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: cpplint
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -21,8 +24,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -34,7 +35,6 @@ jobs:
     - name: echo diff output
       run: |
         echo ${{ steps.getfile.outputs.files }}
-      run: ./check-git-clang-format-output.sh
     - name: build
       run: ./build.sh
     - name: run test
