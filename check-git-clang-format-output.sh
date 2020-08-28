@@ -6,10 +6,9 @@ if git rev-parse --verify HEAD >/dev/null 2>&1; then
   #base_commit=`git rev-parse --verify HEAD`
   #origin_commit=`git rev-parse --verify origin/HEAD`
 
-  current_commit=`git rev-parse --verify HEAD`
-  origin_commit=`git rev-parse --verify HEAD^`
-  #origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
-  #current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.sha')
+  #origin_commit=`git rev-parse --verify HEAD^`
+  origin_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.base.sha')
+  current_commit=$(echo "$GITHUB_CONTEXT" | jq -r '.event.pull_request.head.sha')
   echo $origin_commit
   echo $current_commit
   #echo "$GITHUB_SHA"

@@ -2,10 +2,8 @@
 #include <iostream>
 using namespace std;
 
-int main() 
-{
-             cout << "hello, world!" << endl;
-	     cout<<"hello"   <<   endl;
-	            cout<<"test"<<   endl;
+int main() {
+  cout << "hello, world!" << endl;
+  cout << "test clang format" << endl;
   return 0;
 }
