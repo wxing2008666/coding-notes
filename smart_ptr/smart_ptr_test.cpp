@@ -1,4 +1,5 @@
 ﻿// smart_ptr_test.cpp : 用于测试智能指针的使用以及检测是否有内存泄露的问题
+// test and run by vs2019
 //
 
 #include <iostream>
