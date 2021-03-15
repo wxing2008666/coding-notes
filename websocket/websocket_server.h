@@ -135,7 +135,7 @@ namespace WebSocketCpp {
                         std::cout << "new connection" << std::endl << std::endl;
                         // new connection
                         struct sockaddr_in client_addr;
-                        socklen_t clilen;
+                        socklen_t clilen = sizeof(client_addr);
                         //
                         while (1) {
                             int client = accept(listen_fd_, (struct sockaddr*)(&client_addr), &clilen);
@@ -143,7 +143,7 @@ namespace WebSocketCpp {
                                 if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) {
                                     continue;
                                 } else {
-                                    std::cout << "accept client error:" << std::endl;
+                                    std::cout << "accept client error:" << errno << std::endl;
                                     break;
                                 }
                             }
@@ -177,7 +177,6 @@ namespace WebSocketCpp {
                             //
                             do {
                                 int nread = read(events[i].data.fd, rev_data, sizeof(receive_data));
-                                std::cout << "nread:" << nread << std::endl;
                                 if (nread < 0) {
                                     if (errno == EAGAIN || errno == EWOULDBLOCK) {
                                         break;
@@ -380,10 +379,10 @@ namespace WebSocketCpp {
                 }
                 int msg_len = payload_len;
                 //
-                std::string msg_body;
-                msg_body.assign(recv_msg.c_str() + 1 + payload_length_byte_num + mask_key_byte_num);
-                if (msg_body.length() < msg_len) {
-                    std::cout << "the req msg not receive all, req msg len:" << msg_len << ", body len:" << msg_body.length() << std::endl;
+                //std::string msg_body;
+                //msg_body.assign(recv_msg.c_str() + 1 + payload_length_byte_num + mask_key_byte_num);
+                if (recv_msg.size() < 1 + payload_length_byte_num + mask_key_byte_num + msg_len) {
+                    //std::cout << "the req msg not receive all, req msg len:" << msg_len << ", body len:" << msg_body.length() << std::endl;
                     break;
                 }
                 //
