@@ -21,7 +21,9 @@ fn quick_sort_helper<T: PartialOrd>(arr: &mut [T], l: usize, h: usize) {
             }
         }
         arr.swap(i, tmp);
-        quick_sort_helper(arr, l, i - 1);
+        if 0 != i {
+            quick_sort_helper(arr, l, i - 1);
+        }
         quick_sort_helper(arr, i + 1, h);
     }
 }
