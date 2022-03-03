@@ -6,7 +6,23 @@ pub fn quick_sort<T: PartialOrd>(arr: &mut [T]) {
 
 fn quick_sort_helper<T: PartialOrd>(arr: &mut [T], l: usize, h: usize) {
     if l < h {
-        //
+        let tmp = l;
+        let (mut i, mut j) = (l, h);
+        while i < j {
+            while i < j && arr[j] >= arr[tmp] {
+                j -= 1;
+            }
+
+            while i < j && arr[i] <= arr[tmp] {
+                i += 1;
+            }
+            if i != j {
+                arr.swap(j, i);
+            }
+        }
+        arr.swap(i, tmp);
+        quick_sort_helper(arr, l, i - 1);
+        quick_sort_helper(arr, i + 1, h);
     }
 }
 
