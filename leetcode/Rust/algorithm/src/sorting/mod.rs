@@ -12,3 +12,6 @@ pub use selection_sort::selection_sort;
 
 mod insert_sort;
 pub use insert_sort::insert_sort;
+
+mod heap_sort;
+pub use heap_sort::heap_sort;
