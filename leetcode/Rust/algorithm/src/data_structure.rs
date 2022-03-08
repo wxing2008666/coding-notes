@@ -5,6 +5,7 @@ use std::rc::Rc;
 pub struct ListNode {
     pub val: i32,
     pub next: Option<Box<Self>>,
+    // pub next: Option<Box<ListNode>>,
 }
 
 impl ListNode {
