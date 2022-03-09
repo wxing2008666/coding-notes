@@ -1,4 +1,4 @@
-pub mod add_two_num;
+pub mod add_two_nums;
 
 use crate::data_structure::ListNode;
 
