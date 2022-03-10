@@ -14,6 +14,38 @@ pub trait Matrix<T>: Debug {
         T: PartialEq;
 }
 
+impl<T, const M: usize, const N: usize> Matrix<T> for [[T; M]; N]
+where
+    T: Clone + Debug,
+{
+    fn to_vec(&self) -> Vec<Vec<T>> {
+        Matrix::to_vec(self.as_slice())
+    }
+
+    fn equals_to_slice(&self, slice: &[Vec<T>]) -> bool
+    where
+        T: PartialEq,
+    {
+        self.as_slice().equals_to_slice(slice)
+    }
+}
+
+impl<T, const N: usize> Matrix<T> for [[T; N]]
+where
+    T: Clone + Debug,
+{
+    fn to_vec(&self) -> Vec<Vec<T>> {
+        self.iter().map(|row| row.to_vec()).collect()
+    }
+
+    fn equals_to_slice(&self, slice: &[Vec<T>]) -> bool
+    where
+        T: PartialEq,
+    {
+        *slice == *self
+    }
+}
+
 pub fn iter_list(list: &Option<Box<ListNode>>) -> impl Iterator<Item = &i32> {
     iter::successors(list.as_deref(), |node| node.next.as_deref()).map(|node| &node.val)
 }
