@@ -3,8 +3,16 @@ use crate::data_structure::{ListNode};
 // use std::cell::RefCell;
 // use std::cmp::Ordering;
 // use std::collections::VecDeque;
-// use std::fmt::Debug;
+use std::fmt::Debug;
 use std::iter;
+
+pub trait Matrix<T>: Debug {
+    fn to_vec(&self) -> Vec<Vec<T>>;
+
+    fn equals_to_slice(&self, slice: &[Vec<T>]) -> bool
+    where
+        T: PartialEq;
+}
 
 pub fn iter_list(list: &Option<Box<ListNode>>) -> impl Iterator<Item = &i32> {
     iter::successors(list.as_deref(), |node| node.next.as_deref()).map(|node| &node.val)
