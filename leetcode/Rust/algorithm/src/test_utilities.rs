@@ -46,6 +46,15 @@ where
     }
 }
 
+impl<'a, T> PartialEq<&'a dyn Matrix<T>> for Vec<Vec<T>>
+where
+    T: PartialEq,
+{
+    fn eq(&self, other: &&'a dyn Matrix<T>) -> bool {
+        other.equals_to_slice(self)
+    }
+}
+
 pub fn iter_list(list: &Option<Box<ListNode>>) -> impl Iterator<Item = &i32> {
     iter::successors(list.as_deref(), |node| node.next.as_deref()).map(|node| &node.val)
 }
