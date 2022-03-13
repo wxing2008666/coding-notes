@@ -15,3 +15,4 @@ pub use insert_sort::insert_sort;
 
 mod heap_sort;
 pub use heap_sort::heap_sort;
+pub use heap_sort::heap_sort_v2;
