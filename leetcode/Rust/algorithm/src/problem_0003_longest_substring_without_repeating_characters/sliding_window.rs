@@ -16,5 +16,8 @@ impl super::Solution for Solution {
 
 #[cfg(test)]
 mod tests {
-    //
+    #[test]
+    fn test_problem_0003() {
+        //
+    }
 }
