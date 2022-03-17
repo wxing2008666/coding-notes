@@ -21,22 +21,22 @@ pub struct TreeNode {
     pub right: Option<Rc<RefCell<Self>>>,
 }
 
-// impl TreeNode {
-//     pub fn new(val: i32) -> Self {
-//         Self {
-//             val,
-//             left: None,
-//             right: None,
-//         }
-//     }
-// }
+impl TreeNode {
+    pub fn new(val: i32) -> Self {
+        Self {
+            val,
+            left: None,
+            right: None,
+        }
+    }
+}
 
-// #[allow(variant_size_differences)]
-// #[derive(Debug, PartialEq, Eq)]
-// pub enum NestedInteger {
-//     Int(i32),
-//     List(Vec<Self>),
-// }
+#[allow(variant_size_differences)]
+#[derive(Debug, PartialEq, Eq)]
+pub enum NestedInteger {
+    Int(i32),
+    List(Vec<Self>),
+}
 
 #[cfg(test)]
 mod tests {
@@ -48,18 +48,18 @@ mod tests {
                     "ListNode { val: 3, next: None }");
     }
 
-    // #[test]
-    // fn test_debug_tree_node() {
-    //     assert_eq!(format!("{:?}", TreeNode::new(2)),
-    //                 "TreeNode { val: 2, left: None, right: None }");
-    // }
+    #[test]
+    fn test_debug_tree_node() {
+        assert_eq!(format!("{:?}", TreeNode::new(2)),
+                    "TreeNode { val: 2, left: None, right: None }");
+    }
 
-    // #[test]
-    // fn test_debug_nested_interger() {
-    //     assert_eq!(format!("{:?}", NestedInteger::Int(2)),
-    //                 "Int(2)");
+    #[test]
+    fn test_debug_nested_interger() {
+        assert_eq!(format!("{:?}", NestedInteger::Int(2)),
+                    "Int(2)");
 
-    //     assert_eq!(format!("{:?}", NestedInteger::List(vec![NestedInteger::Int(3), NestedInteger::Int(5)])),
-    //                 "List([Int(3), Int(5)])");
-    // }
+        assert_eq!(format!("{:?}", NestedInteger::List(vec![NestedInteger::Int(3), NestedInteger::Int(5)])),
+                    "List([Int(3), Int(5)])");
+    }
 }
