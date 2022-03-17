@@ -40,7 +40,7 @@ pub enum NestedInteger {
 
 #[cfg(test)]
 mod tests {
-    use super::{ListNode};
+    use super::{ListNode, TreeNode, NestedInteger};
 
     #[test]
     fn test_debug_list_node() {
