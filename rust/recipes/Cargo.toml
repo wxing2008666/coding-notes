@@ -1,5 +1,6 @@
 [workspace]
 
 members = [
-    "test_select"
+    "test_select",
+    "test_time"
 ]
