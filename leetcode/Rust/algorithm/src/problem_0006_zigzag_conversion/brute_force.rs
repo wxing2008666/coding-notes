@@ -11,3 +11,11 @@ impl super::Solution for Solution {
         Self::convert(s, num_rows)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_problem_0006() {
+        super::super::tests::run::<super::Solution>();
+    }
+}
