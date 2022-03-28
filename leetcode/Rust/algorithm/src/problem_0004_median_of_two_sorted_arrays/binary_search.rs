@@ -21,7 +21,7 @@ impl Solution {
     pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
         let (m,n) = (nums1.len(), nums2.len());
 
-        if (m > n) {
+        if m > n {
             return Solution::find_median_sorted_arrays(nums2, nums1);
         }
 
@@ -63,9 +63,9 @@ impl Solution {
         };
 
         // median1：前一部分的最大值
-        let mut median1 = nums_im1.max(nums_jm1);
+        let median1 = nums_im1.max(nums_jm1);
         // median2：后一部分的最小值
-        let mut median2 = nums_i.min(nums_j);
+        let median2 = nums_i.min(nums_j);
 
         if (m + n) % 2 == 0 {
             (median1 + median2) as f64 / 2.0
