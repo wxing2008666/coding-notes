@@ -21,6 +21,20 @@ pub struct Solution;
 
 impl Solution {
     pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
-        //
+        Vec::new()
+    }
+}
+
+impl super::Solution for Solution {
+    fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        Self::three_sum(nums)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_problem_0015() {
+        super::super::tests::run::<super::Solution>();
     }
 }

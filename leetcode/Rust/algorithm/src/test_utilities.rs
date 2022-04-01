@@ -70,3 +70,11 @@ pub fn make_list<I: IntoIterator<Item = i32>>(values: I) -> Option<Box<ListNode>
 
     result
 }
+
+pub fn unstable_sorted<T: Ord>(iter: impl IntoIterator<Item = T>) -> Vec<T> {
+    let mut result = iter.into_iter().collect::<Vec<_>>();
+
+    result.sort_unstable();
+
+    result
+}
