@@ -11,6 +11,7 @@ pub mod problem_0005_longest_palindromic_substring;
 pub mod problem_0006_zigzag_conversion;
 pub mod problem_0011;
 pub mod problem_0015;
+pub mod problem_0016;
 
 // #[cfg(test)]
 mod test_utilities;
