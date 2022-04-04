@@ -12,6 +12,7 @@ pub mod problem_0006_zigzag_conversion;
 pub mod problem_0011;
 pub mod problem_0015;
 pub mod problem_0016;
+pub mod problem_0018;
 
 // #[cfg(test)]
 mod test_utilities;
