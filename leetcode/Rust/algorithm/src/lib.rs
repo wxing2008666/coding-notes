@@ -13,6 +13,8 @@ pub mod problem_0011;
 pub mod problem_0015;
 pub mod problem_0016;
 pub mod problem_0018;
+pub mod problem_0026;
+pub mod problem_0031;
 
 // #[cfg(test)]
 mod test_utilities;
