@@ -2,5 +2,6 @@
 
 members = [
     "test_select",
-    "test_time"
+    "test_time",
+    "lists"
 ]
