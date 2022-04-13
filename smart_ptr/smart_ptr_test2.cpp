@@ -27,7 +27,7 @@ public:
     }
 
     TestPtr(TestPtr&&) {
-        std::cout << "move" << std::endl;
+        std::cout << "move construct" << std::endl;
     }
 
     TestPtr& operator= (TestPtr&&) {
@@ -179,6 +179,30 @@ int main() {
         std::shared_ptr<int> s8(s7, s7->data);
         std::cout << "s7 count:" << s7.use_count() << std::endl;
         std::cout << "s8 count:" << s8.use_count() << std::endl;
+
+        // copy construct
+        std::shared_ptr<TestPtr> s9;
+        s9 = s3; // copy
+        std::cout << "s3 count:" << s3.use_count() << std::endl;
+
+        std::shared_ptr<TestPtr> s10(new TestPtr(333));
+        std::cout << "s10 count:" << s10.use_count() << std::endl;
+        std::cout << "s10, value:" << s10->num() << std::endl;
+        s10 = std::make_shared<TestPtr>(TestPtr(444)); // move class
+        std::cout << "s10 count:" << s10.use_count() << std::endl;
+        std::cout << "s10 value:" << s10->num() << std::endl;
+        std::shared_ptr<int> bar(new int(10));
+        std::cout << "bar count:" << bar.use_count() << std::endl;
+        std::cout << "bar, value:" << *bar << std::endl;
+        bar = std::make_shared<int>(20);   // move int
+        std::cout << "bar count:" << bar.use_count() << std::endl;
+        std::cout << "bar, value:" << *bar << std::endl;
+        // move from unique_ptr
+        std::shared_ptr<TestPtr> s11;
+        std::cout << "s11 count:" << s11.use_count() << std::endl;
+        std::unique_ptr<TestPtr> s_u1(new TestPtr(555));
+        s11 = std::move(s_u1);
+        std::cout << "s11 count:" << s11.use_count() << std::endl;
 
         // STL
 
