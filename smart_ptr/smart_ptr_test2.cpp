@@ -57,9 +57,40 @@ void display_vector2(std::vector<std::unique_ptr<TestPtr>> vec)
     }
 }
 
+void display_vector3(std::vector<std::shared_ptr<TestPtr>>& vec)
+{
+    if (vec.size() >= 2) {
+        std::cout << "param count in func:" << vec[1].use_count() << std::endl;
+    }
+
+    for (auto it = vec.begin(); it != vec.end(); it++)
+    {
+        std::cout << (*it)->num() << std::endl;
+    }
+}
+
+void display_vector4(std::vector<std::shared_ptr<TestPtr>> vec)
+{
+    if (vec.size() >= 2) {
+        std::cout << "param count in func:" << vec[1].use_count() << std::endl;
+    }
+
+    for (auto it = vec.begin(); it != vec.end(); it++)
+    {
+        std::cout << (*it)->num() << std::endl;
+    }
+}
+
 std::unique_ptr<TestPtr> ret_func() {
     std::unique_ptr<TestPtr> ret(new TestPtr(33));
     std::cout << "in ret_func" << std::endl;
+    // return std::move(ret);
+    return ret; // the same effect as above
+}
+
+std::shared_ptr<TestPtr> ret_func_shared() {
+    std::shared_ptr<TestPtr> ret(new TestPtr(44));
+    std::cout << "in ret_func_shared" << std::endl;
     // return std::move(ret);
     return ret; // the same effect as above
 }
@@ -159,54 +190,108 @@ int main() {
     std::cout << "======shared ptr======" << std::endl;
     {
         // base
-        // Construct shared_ptr
-        std::shared_ptr<TestPtr> s1;
-        std::shared_ptr<TestPtr> s2(nullptr);
-        std::shared_ptr<TestPtr> s3(new TestPtr(111));
-        std::cout << "s3 count:" << s3.use_count() << std::endl;
-        std::shared_ptr<TestPtr> s4(s3);
-        std::cout << "s3 count:" << s3.use_count() << std::endl;
-        std::shared_ptr<TestPtr> s5(std::move(s4));
-        std::cout << "s3 count:" << s3.use_count() << std::endl;
+        {
+            // Construct shared_ptr
+            std::shared_ptr<TestPtr> s1;
+            std::shared_ptr<TestPtr> s2(nullptr);
+            std::shared_ptr<TestPtr> s3(new TestPtr(111));
+            std::cout << "s3 count:" << s3.use_count() << std::endl;
+            std::shared_ptr<TestPtr> s4(s3);
+            std::cout << "s3 count:" << s3.use_count() << std::endl;
+            std::shared_ptr<TestPtr> s5(std::move(s4));
+            std::cout << "s3 count:" << s3.use_count() << std::endl;
 
-        std::unique_ptr<TestPtr> u1(new TestPtr(222));
-        std::shared_ptr<TestPtr> s6(std::move(u1));
-        // std::shared_ptr<TestPtr> s6(std::unique_ptr<TestPtr>(new TestPtr(222)));
-        std::cout << "s6 count:" << s6.use_count() << std::endl;
+            std::unique_ptr<TestPtr> u1(new TestPtr(222));
+            std::shared_ptr<TestPtr> s6(std::move(u1));
+            // std::shared_ptr<TestPtr> s6(std::unique_ptr<TestPtr>(new TestPtr(222)));
+            std::cout << "s6 count:" << s6.use_count() << std::endl;
 
-        std::shared_ptr<C> s7(new C);
-        std::cout << "s7 count:" << s7.use_count() << std::endl;
-        std::shared_ptr<int> s8(s7, s7->data);
-        std::cout << "s7 count:" << s7.use_count() << std::endl;
-        std::cout << "s8 count:" << s8.use_count() << std::endl;
+            std::shared_ptr<C> s7(new C);
+            std::cout << "s7 count:" << s7.use_count() << std::endl;
+            std::shared_ptr<int> s8(s7, s7->data);
+            std::cout << "s7 count:" << s7.use_count() << std::endl;
+            std::cout << "s8 count:" << s8.use_count() << std::endl;
 
-        // copy construct
-        std::shared_ptr<TestPtr> s9;
-        s9 = s3; // copy
-        std::cout << "s3 count:" << s3.use_count() << std::endl;
+            // copy construct
+            std::shared_ptr<TestPtr> s9;
+            s9 = s3; // copy
+            std::cout << "s3 count:" << s3.use_count() << std::endl;
 
-        std::shared_ptr<TestPtr> s10(new TestPtr(333));
-        std::cout << "s10 count:" << s10.use_count() << std::endl;
-        std::cout << "s10, value:" << s10->num() << std::endl;
-        s10 = std::make_shared<TestPtr>(TestPtr(444)); // move class
-        std::cout << "s10 count:" << s10.use_count() << std::endl;
-        std::cout << "s10 value:" << s10->num() << std::endl;
-        std::shared_ptr<int> bar(new int(10));
-        std::cout << "bar count:" << bar.use_count() << std::endl;
-        std::cout << "bar, value:" << *bar << std::endl;
-        bar = std::make_shared<int>(20);   // move int
-        std::cout << "bar count:" << bar.use_count() << std::endl;
-        std::cout << "bar, value:" << *bar << std::endl;
-        // move from unique_ptr
-        std::shared_ptr<TestPtr> s11;
-        std::cout << "s11 count:" << s11.use_count() << std::endl;
-        std::unique_ptr<TestPtr> s_u1(new TestPtr(555));
-        s11 = std::move(s_u1);
-        std::cout << "s11 count:" << s11.use_count() << std::endl;
+            // s6.swap(s3);
+            // std::cout << "swap" << std::endl;
+            // std::cout << "s3 count:" << s3.use_count() << std::endl;
+            // std::cout << "s6 count:" << s6.use_count() << std::endl;
+
+            std::shared_ptr<TestPtr> s10(new TestPtr(333));
+            std::cout << "s10 count:" << s10.use_count() << std::endl;
+            std::cout << "s10, value:" << s10->num() << std::endl;
+            s10 = std::make_shared<TestPtr>(TestPtr(444)); // move class
+            std::cout << "s10 count:" << s10.use_count() << std::endl;
+            std::cout << "s10 value:" << s10->num() << std::endl;
+            std::shared_ptr<int> bar(new int(10));
+            std::cout << "bar count:" << bar.use_count() << std::endl;
+            std::cout << "bar, value:" << *bar << std::endl;
+            bar = std::make_shared<int>(20);   // move int
+            std::cout << "bar count:" << bar.use_count() << std::endl;
+            std::cout << "bar, value:" << *bar << std::endl;
+            // move from unique_ptr
+            std::shared_ptr<TestPtr> s11;
+            std::cout << "s11 count:" << s11.use_count() << std::endl;
+            std::unique_ptr<TestPtr> s_u1(new TestPtr(555));
+            s11 = std::move(s_u1);
+            std::cout << "s11 count:" << s11.use_count() << std::endl;
+
+            s11.reset(new TestPtr(666));
+            std::cout << "s11 count:" << s11.use_count() << std::endl;
+            auto p_get = s11.get();
+            std::cout << "s11 value:" << p_get->num() << std::endl;
+            std::cout << "s11 unique:" << s11.unique() << std::endl;
+        }
+
+        std::cout << std::endl;
+        std::cout << "STL" << std::endl;
 
         // STL
+        {
+            // vector
+            std::vector<std::shared_ptr<TestPtr>> vec_ptr;
+            // not allowed, copy construct && copy assignment
+            // vec_ptr.push_back(new TestPtr(30));
+            std::shared_ptr<TestPtr> v_a(new TestPtr(10));
+            // vec_ptr.push_back(std::move(v_a));
+            vec_ptr.push_back(v_a);
+            vec_ptr.push_back(std::shared_ptr<TestPtr>(new TestPtr(20)));
+            // map
+            std::map<int, std::shared_ptr<TestPtr>> map_ptr;
+            map_ptr[123] = std::shared_ptr<TestPtr>(new TestPtr(30));
+            map_ptr[456] = std::shared_ptr<TestPtr>(new TestPtr(40));
+            // set
+            std::set<std::shared_ptr<TestPtr>> set_ptr;
+            set_ptr.insert(std::shared_ptr<TestPtr>(new TestPtr(50)));
+            set_ptr.insert(std::shared_ptr<TestPtr>(new TestPtr(60)));
+        }
 
+        std::cout << std::endl;
+        std::cout << "FUNC" << std::endl;
         // func, 作为函数参数或者函数返回值
+
+        std::vector<std::shared_ptr<TestPtr>> vec_ptr;
+        std::shared_ptr<TestPtr> f_a(new TestPtr(11));
+        vec_ptr.push_back(std::move(f_a));
+        vec_ptr.push_back(std::shared_ptr<TestPtr>(new TestPtr(22)));
+        std::cout << "param count:" << vec_ptr[1].use_count() << std::endl;
+        display_vector3(vec_ptr);
+        std::cout << "now, vec size:" << vec_ptr.size() << std::endl;
+        std::cout << "param count:" << vec_ptr[1].use_count() << std::endl;
+        // display_vector4(std::move(vec_ptr)); // 转移所有权, 这个函数结束就释放资源
+        display_vector4(vec_ptr);
+        std::cout << "now, vec size:" << vec_ptr.size() << std::endl;
+        std::cout << "param count:" << vec_ptr[1].use_count() << std::endl;
+
+        std::shared_ptr<TestPtr> ret = ret_func();
+        std::cout << "get ptr from func return" << std::endl;
+        std::shared_ptr<TestPtr> ret_shared = ret_func_shared();
+        std::cout << "get ptr from func shared return" << std::endl;
     }
     std::cout << "======shared ptr======" << std::endl;
     std::cout << std::endl;
@@ -215,9 +300,15 @@ int main() {
     std::cout << "======weak ptr======" << std::endl;
     {
         // base
+        {}
 
+        std::cout << std::endl;
+        std::cout << "STL" << std::endl;
         // STL
+        {}
 
+        std::cout << std::endl;
+        std::cout << "FUNC" << std::endl;
         // func, 作为函数参数或者函数返回值
     }
     std::cout << "======weak ptr======" << std::endl;
