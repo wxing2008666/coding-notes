@@ -97,6 +97,8 @@ std::shared_ptr<TestPtr> ret_func_shared() {
 
 struct C {int* data;};
 
+struct C1 : public std::enable_shared_from_this<C1> {};
+
 
 int main() {
     // unique_ptr
@@ -300,18 +302,72 @@ int main() {
     std::cout << "======weak ptr======" << std::endl;
     {
         // base
-        {}
+        {
+            // construct
+            std::shared_ptr<TestPtr> s1(new TestPtr(100));
+
+            std::weak_ptr<TestPtr> wp1;
+            std::weak_ptr<TestPtr> wp2(wp1);
+            std::weak_ptr<TestPtr> wp3(s1);
+            std::cout << "wp1 count:" << wp1.use_count() << std::endl;
+            std::cout << "wp2 count:" << wp2.use_count() << std::endl;
+            std::cout << "wp3 count:" << wp3.use_count() << std::endl;
+            std::weak_ptr<TestPtr> wp4(wp3);
+            std::cout << "wp4 count:" << wp4.use_count() << std::endl;
+            std::cout << "s1 count:" << s1.use_count() << std::endl;
+            // operator =
+            std::shared_ptr<TestPtr> sp1, sp2;
+            std::weak_ptr<TestPtr> wp5;
+            sp1 = std::make_shared<TestPtr>(TestPtr(200));
+            wp5 = sp1;
+            std::cout << "wp5 count:" << wp5.use_count() << std::endl;
+            std::cout << "sp1 count:" << sp1.use_count() << std::endl;
+            std::cout << "sp2 count:" << sp2.use_count() << std::endl;
+            std::cout << std::endl;
+            sp2 = wp5.lock();
+            std::cout << "wp5 count:" << wp5.use_count() << std::endl;
+            std::cout << "sp1 count:" << sp1.use_count() << std::endl;
+            std::cout << "sp2 count:" << sp2.use_count() << std::endl;
+            std::cout << std::endl;
+            sp1.reset();
+            std::cout << "wp5 count:" << wp5.use_count() << std::endl;
+            std::cout << "sp1 count:" << sp1.use_count() << std::endl;
+            std::cout << "sp2 count:" << sp2.use_count() << std::endl;
+            std::cout << std::endl;
+            sp1 = wp5.lock();
+            std::cout << "wp5 count:" << wp5.use_count() << std::endl;
+            std::cout << "sp1 count:" << sp1.use_count() << std::endl;
+            std::cout << "sp2 count:" << sp2.use_count() << std::endl;
+            std::cout << "wp5 expired?:" << wp5.expired() <<std::endl;
+            wp5.reset();
+            std::cout << "wp5 count:" << wp5.use_count() << std::endl;
+            std::cout << "sp1 count:" << sp1.use_count() << std::endl;
+            std::cout << "sp2 count:" << sp2.use_count() << std::endl;
+            std::cout << "wp5 expired?:" << wp5.expired() <<std::endl;
+        }
 
         std::cout << std::endl;
         std::cout << "STL" << std::endl;
         // STL
-        {}
+        {
+            std::vector<std::weak_ptr<TestPtr>> vec_ptr;
+            std::shared_ptr<TestPtr> sp1(new TestPtr(11));
+            std::weak_ptr<TestPtr> wp1(sp1);
+            vec_ptr.push_back(wp1);
+            std::cout << "=====" << std::endl;
+        }
 
         std::cout << std::endl;
         std::cout << "FUNC" << std::endl;
         // func, 作为函数参数或者函数返回值
     }
     std::cout << "======weak ptr======" << std::endl;
+
+    std::shared_ptr<C1> p1, p2;
+    p1 = std::make_shared<C1>();
+    p2 = p1->shared_from_this();
+    if (!p1.owner_before(p2) && !p2.owner_before(p1))
+        std::cout << "p1 and p2 share ownship" << std::endl;
 
     return 0;
 }
